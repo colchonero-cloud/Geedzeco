@@ -1,6 +1,7 @@
 package com.geedzeco.repository;
 
-import com.geedzeco.model.Expenses;
+import com.geedzeco.model.Category;
+import com.geedzeco.model.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,24 +12,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface ExpensesRepository extends JpaRepository<Expenses, Long> {
+public interface ExpensesRepository extends JpaRepository<Expense, Long> {
     
-    // Wyszukiwanie po dacie
-    List<Expenses> findByDate(LocalDate date);
+    List<Expense> findByDate(LocalDate date);
     
-    // Wyszukiwanie po kategorii
-    List<Expenses> findByCategory(String category);
+    List<Expense> findByCategory(Category category);
     
-    // Wyszukiwanie po sumie (większej lub równej)
-    List<Expenses> findByAmountGreaterThanOrEqual(BigDecimal amount);
+    List<Expense> findByAmountGreaterThanOrEqual(BigDecimal amount);
     
-    // Wyszukiwanie po zakresie dat
-    List<Expenses> findByDateBetween(LocalDate startDate, LocalDate endDate);
+    List<Expense> findByDateBetween(LocalDate startDate, LocalDate endDate);
     
-    // Wyszukiwanie po zakresie sumy
-    List<Expenses> findByAmountBetween(BigDecimal minAmount, BigDecimal maxAmount);
+    List<Expense> findByAmountBetween(BigDecimal minAmount, BigDecimal maxAmount);
     
-    // Wyszukiwanie po dacie i kategorii
-    @Query("SELECT e FROM Expenses e WHERE e.date = :date AND e.category = :category")
-    List<Expenses> findByDateAndCategory(@Param("date") LocalDate date, @Param("category") String category);
+    @Query("SELECT e FROM Expense e WHERE e.date = :date AND e.category = :category")
+    List<Expense> findByDateAndCategory(@Param("date") LocalDate date, @Param("category") String category);
 }
